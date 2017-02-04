@@ -1,10 +1,12 @@
 title: Your awesome title
 email: your-email@domain.com
 description: description
-baseurl: /Jekyll-Avalon
+baseurl: 
 url: http://joshuaavalon.github.io
 twitter_username: joshuaavalon
 github_username:  joshuaavalon
+host: 104.224.162.30
+port: 80
 
 sass:
   style: compressed
