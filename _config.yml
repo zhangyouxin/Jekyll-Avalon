@@ -5,6 +5,7 @@ baseurl: /Jekyll-Avalon
 url: http://joshuaavalon.github.io
 twitter_username: joshuaavalon
 github_username:  joshuaavalon
+host: "http://aluman.tk/"
 
 sass:
   style: compressed
