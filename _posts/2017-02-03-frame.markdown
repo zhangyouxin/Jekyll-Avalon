@@ -1,0 +1,132 @@
+---
+layout: post
+title:  Hi, Space!
+categories:
+    - welcome
+tags:
+    - sticky
+thumbnail: /img/space.jpg
+cover: /img/space.jpg
+prism: false
+published: true
+---
+
+# 技术调研
+
+## Spring MVC
+开发语言：**Java**
+
+- 传统方式部署应用
+- 稳定，快速开发
+
+
+## Spring Boot
+开发语言：**Java**
+- 通过注解解决很多问题，代码简洁，上手很快
+- 功能丰富
+- 容易打包部署 
+
+**使用Maven（或者gradle）构建依赖：**
+
+``pom.xml``
+
+```xml
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
+```
+
+
+**Request Mapping:**``GreetingController.java``
+
+```Java
+package hello;
+
+import java.util.concurrent.atomic.AtomicLong;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController(method=GET)
+public class GreetingController {
+
+    private static final String template = "Hello, %s!";
+    private final AtomicLong counter = new AtomicLong();
+
+    @RequestMapping("/greeting")
+    public Greeting greeting(@RequestParam(value="name", defaultValue="World") String name) {
+        return new Greeting(counter.incrementAndGet(),
+                            String.format(template, name));
+    }
+}
+```
+
+Spring Boot 自带了内嵌Tomcat，所以可以很简单的把应用跑起来
+
+**通过一个main()方法启动应用:**``Application.java``
+
+```Java
+package hello;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class Application {
+
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+}
+
+```
+
+**打包运行:**
+
+```Java
+java -jar build/libs/rest-service-0.1.0-SNAPSHOT.jar
+```
+
+
+## Node.js with Express
+开发语言：**JavaScript**
+
+- 代码简洁，框架轻量高效
+- 社区文档丰富
+- 异步请求，单线程服务，可靠性低
+- trello，雅虎邮箱，twitter等公司在实践
+
+一个请求例子：
+```JS
+
+app.put("/contacts/:id", function(req, res) {
+});
+
+```
+后端实现：
+```JavaScript
+app.post("/contacts", function(req, res) {
+  var newContact = req.body;
+  newContact.createDate = new Date();
+
+  if (!(req.body.firstName || req.body.lastName)) {
+    handleError(res, "Invalid user input", "Must provide a first or last name.", 400);
+  }
+
+  db.collection(CONTACTS_COLLECTION).insertOne(newContact, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to create new contact.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
+  });
+});
+```
